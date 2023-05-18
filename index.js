@@ -4,7 +4,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 mongoose
-    .connect(process.env.LOCAL_DB)
+    .connect(process.env.DB_URL)
     .then((result) => console.log("Connected."))
     .catch((err) => console.log(err));
 
