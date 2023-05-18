@@ -4,7 +4,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 mongoose
-    .connect(process.env.DB_URL)
+    .connect("mongodb+srv://dark-world:UjI4cLTckSBCxcXy@cluster0.hf59b0d.mongodb.net/dark-world")
     .then((result) => console.log("Connected."))
     .catch((err) => console.log(err));
 
