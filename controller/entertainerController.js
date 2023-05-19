@@ -185,6 +185,17 @@ const updateEntertainer = async (req, res) => {
     });
 };
 
+const deleteEntertainer = async (req, res) => {
+    try {
+        const entertainer = await entertainerModel.findByIdAndDelete(
+            req.params.id
+        );
+        res.send(entertainer);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 module.exports.getEntertainer = getEntertainer;
 module.exports.getEntertainerById = getEntertainerById;
 module.exports.getProfliePhoto = getProfliePhoto;
