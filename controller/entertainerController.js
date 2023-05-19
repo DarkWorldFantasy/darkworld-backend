@@ -58,24 +58,42 @@ const createEntertainer = async (req, res) => {
             });
         });
 
-        const readPhotosFiles = Promise.all(
-            files.photos.map((photo) => {
-                return new Promise((resolve, reject) => {
-                    fs.readFile(photo.filepath, (err, result) => {
-                        if (err)
-                            reject(
-                                res.status(404).send("something went wrong!")
-                            );
+        let readPhotosFiles;
+        if (files.photos.originalFilename) {
+            readPhotosFiles = new Promise((resolve, reject) => {
+                fs.readFile(files.profile.filepath, (err, result) => {
+                    if (err)
+                        reject(res.status(404).send("something went wrong!"));
 
-                        const obj = {
-                            data: result,
-                            contentType: photo.mimetype,
-                        };
-                        resolve(obj);
+                    resolve({
+                        data: result,
+                        contentType: files.profile.mimetype,
                     });
                 });
-            })
-        );
+            });
+        }
+        if (files.photos.length > 0) {
+            readPhotosFiles = Promise.all(
+                files.photos.map((photo) => {
+                    return new Promise((resolve, reject) => {
+                        fs.readFile(photo.filepath, (err, result) => {
+                            if (err)
+                                reject(
+                                    res
+                                        .status(404)
+                                        .send("something went wrong!")
+                                );
+
+                            const obj = {
+                                data: result,
+                                contentType: photo.mimetype,
+                            };
+                            resolve(obj);
+                        });
+                    });
+                })
+            );
+        }
 
         await Promise.all([readProfileFile, readPhotosFiles]).then((result) => {
             entertainer.profile = result[0];
@@ -120,7 +138,20 @@ const updateEntertainer = async (req, res) => {
         }
 
         let readPhotosFiles;
-        if (files.photos.originalFilename || files.photos.length > 0) {
+        if (files.photos.originalFilename) {
+            readPhotosFiles = new Promise((resolve, reject) => {
+                fs.readFile(files.photos.filepath, (err, result) => {
+                    if (err)
+                        reject(res.status(404).send("something went wrong!"));
+
+                    resolve({
+                        data: result,
+                        contentType: files.profile.mimetype,
+                    });
+                });
+            });
+        }
+        if (files.photos.length > 0) {
             readPhotosFiles = Promise.all(
                 files.photos.map((photo) => {
                     return new Promise((resolve, reject) => {
@@ -152,17 +183,6 @@ const updateEntertainer = async (req, res) => {
             console.log(error);
         }
     });
-};
-
-const deleteEntertainer = async (req, res) => {
-    try {
-        const entertainer = await entertainerModel.findByIdAndDelete(
-            req.params.id
-        );
-        res.send(entertainer);
-    } catch (error) {
-        console.log(error);
-    }
 };
 
 module.exports.getEntertainer = getEntertainer;
