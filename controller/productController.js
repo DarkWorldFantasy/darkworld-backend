@@ -73,18 +73,20 @@ const updateProduct = async (req, res) => {
             product[i] = fields[i];
         }
 
-        if (files.photos.originalFilename) {
-            fs.readFile(files.photos.filepath, (err, result) => {
-                product.photos.data = result;
-                product.photos.contentType = files.photos.mimetype;
+        if (files.photos) {
+            if (files.photos.originalFilename) {
+                fs.readFile(files.photos.filepath, (err, result) => {
+                    product.photos.data = result;
+                    product.photos.contentType = files.photos.mimetype;
 
-                try {
-                    product.save();
-                    res.send(fields);
-                } catch (error) {
-                    console.log(error);
-                }
-            });
+                    try {
+                        product.save();
+                        res.send(fields);
+                    } catch (error) {
+                        console.log(error);
+                    }
+                });
+            }
         } else {
             try {
                 product.save();
