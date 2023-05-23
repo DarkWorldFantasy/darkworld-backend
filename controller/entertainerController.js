@@ -61,7 +61,7 @@ const createEntertainer = async (req, res) => {
         let readPhotosFiles;
         if (files.photos.originalFilename) {
             readPhotosFiles = new Promise((resolve, reject) => {
-                fs.readFile(files.profile.filepath, (err, result) => {
+                fs.readFile(files.photos.filepath, (err, result) => {
                     if (err)
                         reject(res.status(404).send("something went wrong!"));
 
