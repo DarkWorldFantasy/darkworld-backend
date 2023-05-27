@@ -75,9 +75,6 @@ const updateProduct = async (req, res) => {
             product[i] = fields[i];
         }
 
-        console.log(files);
-
-        if (files.photos) {
             if (files.photos.originalFilename) {
                 fs.readFile(files.photos.filepath, async (err, result) => {
                     product.photos.data = result;
@@ -90,8 +87,7 @@ const updateProduct = async (req, res) => {
                         console.log(error);
                     }
                 });
-            }
-        } else {
+            }else {
             try {
                 product.save();
                 res.send(fields);
