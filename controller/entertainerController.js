@@ -9,6 +9,7 @@ const getEntertainer = async (req, res) => {
         const data = await entertainerModel
             .find()
             .select({ profile: 0, photos: 0 })
+            .sort({_id: -1})
             .populate("category", "name");
 
         res.send(data);
