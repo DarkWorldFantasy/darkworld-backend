@@ -4,6 +4,7 @@ const getOrder = async (req, res) => {
     try {
         const data = await orderModel
             .find()
+            .sort({_id: -1})
             .populate("product", "name")
             .populate("user", "email");
         res.send(data);
@@ -16,6 +17,7 @@ const getOrderById = async (req, res) => {
     try {
         const data = await orderModel
             .find({ user: req.user.id })
+            .sort({_id: -1})
             .populate("product", "name")
             .populate("user", "email");
         res.send(data);
