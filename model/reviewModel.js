@@ -7,7 +7,7 @@ const reviewSchema = new Schema({
         required: true,
     },
     review: { type: Number, default: 0 },
-    orderCount: { type: Number, default: 0 },
+    orderCount: { type: Number, default: 1 },
 });
 
 const reviewModel = model("review", reviewSchema);
