@@ -7,6 +7,7 @@ const getOrder = async (req, res) => {
             .sort({_id: -1})
             .populate("product", "name")
             .populate("user", "email");
+        if (!data) return res.status(404).send("no data found!");
         res.send(data);
     } catch (error) {
         console.log(error);
@@ -20,6 +21,7 @@ const getOrderById = async (req, res) => {
             .sort({_id: -1})
             .populate("product", "name")
             .populate("user", "email");
+        if (!data) return res.status(404).send("no data found!");
         res.send(data);
     } catch (error) {
         console.log(error);
@@ -34,7 +36,7 @@ const recentOrder = async (req, res) => {
             .limit(3)
             .populate("product", "name")
             .populate("user", "email");
-
+if (!data) return res.status(404).send("no data found!");
         res.send(data);
     } catch (error) {
         console.log(error);
@@ -48,7 +50,7 @@ const latestOrderByUser = async (req, res) => {
             .sort({ _id: -1 })
             .populate("product", "name")
             .populate("user", "email");
-
+if (!data) return res.status(404).send("no data found!");
         res.send(data);
     } catch (error) {
         console.log(error);
