@@ -50,7 +50,7 @@ const updateReview = async (req, res) => {
     const obj = await reviewModel.findOne({
         entertainerId: req.params.id,
     });
-    const prevCount = obj.orderCount - 1;
+    const prevCount = obj.orderCount > 1 ? obj.orderCount - 1 : obj.orderCount;
     const newReview =
         (obj.review * prevCount + parseInt(req.body.review)) / obj.orderCount;
     obj["review"] = newReview;
