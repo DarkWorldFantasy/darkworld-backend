@@ -9,7 +9,7 @@ router
     .route("/")
     .get(authorize, entertainerController.getEntertainer)
     .post(authorize, entertainerController.createEntertainer);
-router.route("/newArrival").get(authorize, entertainerController.newArrival);
+router.route("/newArrival").get(entertainerController.newArrival);
 router
     .route("/:id")
     .post(authorize, entertainerController.addPhotosById)
