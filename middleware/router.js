@@ -7,7 +7,6 @@ const orderRouter = require("../router/orderRouter");
 const postRouter = require("../router/postRouter");
 const userProductInteractionRouter = require("../router/userProductInteractionRouter");
 const roleRouter = require("../router/roleRouter");
-const wishlistRouter = require("../router/wishlistRouter");
 
 module.exports = (app) => {
     app.use("/user/", userRouter);
@@ -19,5 +18,4 @@ module.exports = (app) => {
     app.use("/order", orderRouter);
     app.use("/post", postRouter);
     app.use("/role", roleRouter);
-    app.use("/wishlist", wishlistRouter);
 };
