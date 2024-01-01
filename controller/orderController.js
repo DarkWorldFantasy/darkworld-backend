@@ -46,7 +46,7 @@ if (!data) return res.status(404).send("no data found!");
 const latestOrderByUser = async (req, res) => {
     try {
         const data = await orderModel
-            .findOne({ user: req.user.id, product: req.params.productId })
+            .findOne({ user: req.user.id, product: req.params.productId, done: true, reviewStatus: false })
             .sort({ _id: -1 })
             .populate("product", "name")
             .populate("user", "email");
